@@ -1,9 +1,10 @@
-package edu.MapNotes.pin;
+package agh.edu.pl.MapNotes.model;
 
-import edu.MapNotes.note.Note;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
 
 @Entity
 public class Pin {
@@ -11,13 +12,14 @@ public class Pin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     private Note note;
 
     @NotNull
-    private String data;
+    private HashMap<String, Object> data;
 
-    public Pin(@NotNull String data, Note note) {
+    public Pin(@NotNull HashMap<String, Object> data, Note note) {
         this.data = data;
     }
 
@@ -29,11 +31,15 @@ public class Pin {
         return id;
     }
 
-    public String getData() {
+    public HashMap<String, Object> getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(HashMap<String, Object> data) {
         this.data = data;
+    }
+
+    public void setNote(Note note) {
+        this.note = note;
     }
 }

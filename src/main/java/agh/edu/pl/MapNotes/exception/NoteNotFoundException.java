@@ -1,4 +1,4 @@
-package edu.MapNotes.note;
+package agh.edu.pl.MapNotes.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

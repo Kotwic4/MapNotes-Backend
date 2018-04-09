@@ -1,5 +1,8 @@
-package edu.MapNotes.pin;
+package agh.edu.pl.MapNotes.controller;
 
+import agh.edu.pl.MapNotes.exception.PinNotFoundException;
+import agh.edu.pl.MapNotes.model.Pin;
+import agh.edu.pl.MapNotes.model.PinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

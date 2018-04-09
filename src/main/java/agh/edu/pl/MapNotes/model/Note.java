@@ -1,9 +1,8 @@
-package edu.MapNotes.note;
-
-import edu.MapNotes.pin.Pin;
+package agh.edu.pl.MapNotes.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,13 +12,13 @@ public class Note {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "note")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "note")
     private List<Pin> pins;
 
     @NotNull
-    private String data;
+    private HashMap<String, Object> data;
 
-    public Note(@NotNull String data) {
+    public Note(HashMap<String, Object> data) {
         this.data = data;
         this.pins = new LinkedList<>();
     }
@@ -36,11 +35,11 @@ public class Note {
         return pins;
     }
 
-    public String getData() {
+    public @NotNull HashMap<String, Object> getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(HashMap<String, Object> data) {
         this.data = data;
     }
 }

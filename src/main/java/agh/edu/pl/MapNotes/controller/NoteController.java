@@ -1,10 +1,14 @@
-package edu.MapNotes.note;
+package agh.edu.pl.MapNotes.controller;
 
-import edu.MapNotes.pin.Pin;
-import edu.MapNotes.pin.PinRepository;
+import agh.edu.pl.MapNotes.exception.NoteNotFoundException;
+import agh.edu.pl.MapNotes.model.Note;
+import agh.edu.pl.MapNotes.model.NoteRepository;
+import agh.edu.pl.MapNotes.model.Pin;
+import agh.edu.pl.MapNotes.model.PinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,13 +24,18 @@ public class NoteController {
     }
 
     @GetMapping
-    public List<Note> getAllNotes(){
+    public List<Note> getAllNotes() {
         return noteRepository.findAll();
     }
 
     @PutMapping
-    public Note putNote(@RequestBody Note note){
-        return noteRepository.save(note);
+    public Note putNote(@Valid @RequestBody Note note) {
+        note = noteRepository.save(note);
+        for(Pin pin: note.getPins()){
+            pin.setNote(note);
+            pinRepository.save(pin);
+        }
+        return note;
     }
 
     @GetMapping("/{noteId}")
@@ -34,16 +43,16 @@ public class NoteController {
         return noteRepository.findById(noteId).orElseThrow(NoteNotFoundException::new);
     }
 
-    @PutMapping("/{noteId}")
+    @PutMapping("/{noteId}/pin")
     public Pin addPin(@PathVariable("noteId") Long noteId,
-                      @RequestBody Pin pin) throws NoteNotFoundException {
+                      @Valid @RequestBody Pin pin) throws NoteNotFoundException {
         Note note = noteRepository.findById(noteId).orElseThrow(NoteNotFoundException::new);
-        Pin pin2 = new Pin(pin.getData(),note);
-        return pinRepository.save(pin2);
+        pin.setNote(note);
+        return pinRepository.save(pin);
     }
 
     @DeleteMapping("/{noteId}")
-    public void deleteNoteById(@PathVariable("noteId") Long noteId){
+    public void deleteNoteById(@PathVariable("noteId") Long noteId) {
         noteRepository.deleteById(noteId);
     }
 }

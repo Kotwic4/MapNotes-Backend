@@ -1,4 +1,4 @@
-package edu.MapNotes;
+package agh.edu.pl.MapNotes.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SampleController {
 
     @GetMapping
-    public String sampleApi(){
+    public String sampleApi() {
         return "Hello World";
     }
 }

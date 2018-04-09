@@ -1,4 +1,4 @@
-package edu.MapNotes.pin;
+package agh.edu.pl.MapNotes.model;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

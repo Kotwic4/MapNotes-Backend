@@ -34,6 +34,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 public class BaseControllerTest {
 
     public Note note;
+    public Note note2;
     public List<Pin> pins;
     public Pin pin1;
     public Pin pin2;
@@ -81,6 +82,7 @@ public class BaseControllerTest {
 
 
         this.note = new Note(noteData);
+        this.note2 = new Note(new HashMap<>());
 
         HashMap<String, Object> pinData1 = new HashMap<>();
         pinData1.put("name", "Small house in ");
@@ -107,9 +109,10 @@ public class BaseControllerTest {
 
 //        noteData.put("pins", this.pins);
 
+        this.noteRepository.save(this.note);
+        this.noteRepository.save(this.note2);
         this.pinRepository.save(this.pin1);
         this.pinRepository.save(this.pin2);
         this.pinRepository.save(this.pin3);
-        this.noteRepository.save(this.note);
     }
 }

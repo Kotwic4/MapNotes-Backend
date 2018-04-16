@@ -28,7 +28,6 @@ import java.util.List;
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = MapNotesApplication.class)
 @WebAppConfiguration
 public class BaseControllerTest {

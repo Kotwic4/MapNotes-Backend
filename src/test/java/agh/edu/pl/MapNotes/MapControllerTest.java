@@ -3,6 +3,10 @@ package agh.edu.pl.MapNotes;
 import agh.edu.pl.MapNotes.model.Map;
 import agh.edu.pl.MapNotes.model.Pin;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.HashMap;
 
@@ -11,6 +15,9 @@ import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = MapNotesApplication.class)
+@WebAppConfiguration
 public class MapControllerTest extends BaseControllerTest {
 
     @Test

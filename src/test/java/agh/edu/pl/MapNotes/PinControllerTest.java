@@ -22,7 +22,7 @@ public class PinControllerTest extends BaseControllerTest {
         mockMvc.perform(get("/pin"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$", hasSize(this.pins.size())));
+                .andExpect(jsonPath("$", hasSize(8)));
     }
 
     @Test
@@ -39,5 +39,4 @@ public class PinControllerTest extends BaseControllerTest {
         mockMvc.perform(delete("/pin/{id}", this.pin1.getId()))
                 .andExpect(status().isOk());
     }
-
 }

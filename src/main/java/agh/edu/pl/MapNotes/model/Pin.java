@@ -3,7 +3,6 @@ package agh.edu.pl.MapNotes.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 
 @Entity
@@ -14,12 +13,11 @@ public class Pin {
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
-    private Note note;
+    private Map map;
 
-    @NotNull
     private HashMap<String, Object> data;
 
-    public Pin(@NotNull HashMap<String, Object> data, Note note) {
+    public Pin(HashMap<String, Object> data, Map map) {
         this.data = data;
     }
 
@@ -39,7 +37,7 @@ public class Pin {
         this.data = data;
     }
 
-    public void setNote(Note note) {
-        this.note = note;
+    public void setMap(Map map) {
+        this.map = map;
     }
 }

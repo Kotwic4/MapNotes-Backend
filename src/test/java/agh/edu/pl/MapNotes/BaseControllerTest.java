@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @WebAppConfiguration
 public class BaseControllerTest {
 
-    public Note note;
+    public Note note1;
     public Note note2;
     public List<Pin> pins;
     public Pin pin1;
@@ -47,20 +47,20 @@ public class BaseControllerTest {
     public MockMvc mockMvc;
 
     @Autowired
-    private WebApplicationContext webApplicationContext;
+    public WebApplicationContext webApplicationContext;
 
     @Autowired
-    private PinRepository pinRepository;
+    public PinRepository pinRepository;
 
     @Autowired
-    private NoteRepository noteRepository;
+    public NoteRepository noteRepository;
 
-    private ObjectMapper mapper = new ObjectMapper();
+    public ObjectMapper mapper = new ObjectMapper();
 
-    private HttpMessageConverter<Object> mappingJackson2HttpMessageConverter;
+    public HttpMessageConverter<Object> mappingJackson2HttpMessageConverter;
 
     @Autowired
-    private void setConverters(HttpMessageConverter<Object>[] converters) {
+    public void setConverters(HttpMessageConverter<Object>[] converters) {
         mappingJackson2HttpMessageConverter = Arrays.stream(converters)
                 .filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter)
                 .findAny()
@@ -68,7 +68,7 @@ public class BaseControllerTest {
         assertNotNull("the JSON message converter must not be null", mappingJackson2HttpMessageConverter);
     }
 
-    protected String toJson(Object o) throws IOException {
+    public String toJson(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
         mappingJackson2HttpMessageConverter.write(o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
         return mockHttpOutputMessage.getBodyAsString();
@@ -81,26 +81,26 @@ public class BaseControllerTest {
         noteData.put("name", "flats in Krakow");
 
 
-        this.note = new Note(noteData);
+        this.note1 = new Note(noteData);
         this.note2 = new Note(new HashMap<>());
 
         HashMap<String, Object> pinData1 = new HashMap<>();
         pinData1.put("name", "Small house in ");
         pinData1.put("size", "32");
         pinData1.put("price", "600 tys");
-        this.pin1 = new Pin(pinData1, this.note);
+        this.pin1 = new Pin(pinData1, this.note1);
 
         HashMap<String, Object> pinData2 = new HashMap<>();
         pinData2.put("name", "flat in Krowodrza");
         pinData2.put("price", "500 tys");
         pinData2.put("size", "50");
-        this.pin2 = new Pin(pinData2, this.note);
+        this.pin2 = new Pin(pinData2, this.note1);
 
         HashMap<String, Object> pinData3 = new HashMap<>();
         pinData3.put("name", "Big house in ");
         pinData3.put("price", "500 tys");
         pinData3.put("size", "100");
-        this.pin3 = new Pin(pinData3, this.note);
+        this.pin3 = new Pin(pinData3, this.note1);
 
         this.pins = new ArrayList<>();
         this.pins.add(pin1);
@@ -109,7 +109,7 @@ public class BaseControllerTest {
 
 //        noteData.put("pins", this.pins);
 
-        this.noteRepository.save(this.note);
+        this.noteRepository.save(this.note1);
         this.noteRepository.save(this.note2);
         this.pinRepository.save(this.pin1);
         this.pinRepository.save(this.pin2);

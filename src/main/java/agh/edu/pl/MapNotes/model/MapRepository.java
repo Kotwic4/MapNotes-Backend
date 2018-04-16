@@ -2,5 +2,5 @@ package agh.edu.pl.MapNotes.model;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface NoteRepository extends JpaRepository<Note,Long> {
+public interface MapRepository extends JpaRepository<Map,Long> {
 }

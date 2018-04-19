@@ -1,12 +1,11 @@
-package agh.edu.pl.MapNotes;
+package agh.edu.pl.MapNotes.controller;
 
 import agh.edu.pl.MapNotes.model.Map;
 import agh.edu.pl.MapNotes.model.Pin;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.HashMap;
 
@@ -15,23 +14,22 @@ import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = MapNotesApplication.class)
-@WebAppConfiguration
-public class MapControllerTest extends BaseControllerTest {
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
+class MapControllerTest extends BaseControllerTest {
 
     @Test
-    public void getNoteFirstCaseTest() throws Exception {
+    void getNoteFirstCaseTest() throws Exception {
         mockMvc.perform(get("/map/{id}", this.map1.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$.id", is(this.map1.getId().intValue())))
                 .andExpect(jsonPath("$.data", is(this.map1.getData())))
-                .andExpect(jsonPath("$.pins", hasSize(0)));
+                .andExpect(jsonPath("$.pins", hasSize(3)));
     }
 
     @Test
-    public void getNoteSecondCaseTest() throws Exception {
+    void getNoteSecondCaseTest() throws Exception {
         mockMvc.perform(get("/map/{id}", this.map2.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
@@ -41,14 +39,14 @@ public class MapControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void getAllNotesTest() throws Exception {
+    void getAllNotesTest() throws Exception {
         mockMvc.perform(get("/map"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType));
     }
 
     @Test
-    public void putNoteTest() throws Exception {
+    void putNoteTest() throws Exception {
         Map map = createMap();
         mockMvc.perform(put("/map/")
                 .content(toJson(map))
@@ -57,7 +55,7 @@ public class MapControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void putPinTest() throws Exception {
+    void putPinTest() throws Exception {
         Pin pin1 = createPin(map2);
         mockMvc.perform(put("/map/{mapId}/pin", map2.getId())
                 .content(toJson(pin1))
@@ -66,7 +64,7 @@ public class MapControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void deleteNoteTest() throws Exception {
+    void deleteNoteTest() throws Exception {
         mockMvc.perform(delete("/map/{id}", this.map1.getId()))
                 .andExpect(status().isOk());
     }
@@ -74,8 +72,7 @@ public class MapControllerTest extends BaseControllerTest {
     private Map createMap() {
         HashMap<String, Object> noteData = new HashMap<String, Object>();
         noteData.put("name", "flats in Warsaw");
-        Map newMap = new Map(noteData);
-        return newMap;
+        return new Map(noteData);
     }
 
     private Pin createPin(Map map) {

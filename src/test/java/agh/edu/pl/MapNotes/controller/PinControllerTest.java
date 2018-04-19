@@ -1,32 +1,31 @@
-package agh.edu.pl.MapNotes;
+package agh.edu.pl.MapNotes.controller;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = MapNotesApplication.class)
-@WebAppConfiguration
-public class PinControllerTest extends BaseControllerTest {
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
+class PinControllerTest extends BaseControllerTest {
 
     @Test
-    public void getPins() throws Exception {
+    void getPins() throws Exception {
         mockMvc.perform(get("/pin"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$", hasSize(8)));
+                .andExpect(jsonPath("$", hasSize(3)));
     }
 
     @Test
-    public void getSinglePin() throws Exception {
+    void getSinglePin() throws Exception {
         mockMvc.perform(get("/pin/{id}", this.pin1.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
@@ -35,8 +34,9 @@ public class PinControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void deletePin() throws Exception {
+    void deletePin() throws Exception {
         mockMvc.perform(delete("/pin/{id}", this.pin1.getId()))
                 .andExpect(status().isOk());
+        assertEquals(2,this.pinRepository.findAll().size());
     }
 }

@@ -1,20 +1,19 @@
-package agh.edu.pl.MapNotes;
+package agh.edu.pl.MapNotes.controller;
 
 import agh.edu.pl.MapNotes.model.Map;
 import agh.edu.pl.MapNotes.model.MapRepository;
 import agh.edu.pl.MapNotes.model.Pin;
 import agh.edu.pl.MapNotes.model.PinRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -28,9 +27,9 @@ import java.util.List;
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-@SpringBootTest(classes = MapNotesApplication.class)
-@WebAppConfiguration
-public class BaseControllerTest {
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
+public abstract class BaseControllerTest {
 
     public Map map1;
     public Map map2;
@@ -39,11 +38,11 @@ public class BaseControllerTest {
     public Pin pin2;
     public Pin pin3;
 
-    public MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
+    MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
             Charset.forName("utf8"));
 
-    public MockMvc mockMvc;
+    MockMvc mockMvc;
 
     @Autowired
     public WebApplicationContext webApplicationContext;
@@ -67,20 +66,21 @@ public class BaseControllerTest {
         assertNotNull("the JSON message converter must not be null", mappingJackson2HttpMessageConverter);
     }
 
-    public String toJson(Object o) throws IOException {
+    String toJson(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
         mappingJackson2HttpMessageConverter.write(o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
         return mockHttpOutputMessage.getBodyAsString();
     }
 
-    @Before
-    public void setup() throws Exception {
-        this.mockMvc = webAppContextSetup(webApplicationContext).build();
+    private void databaseInit() {
+        pinRepository.deleteAll();
+        mapRepository.deleteAll();
+
         HashMap<String, Object> mapData = new HashMap<String, Object>();
         mapData.put("name", "flats in Krakow");
 
-        this.map1 = new Map(mapData);
-        this.map2 = new Map(new HashMap<>());
+        this.map1 = this.mapRepository.save(new Map(mapData));
+        this.map2 = this.mapRepository.save(new Map(new HashMap<>()));
 
         HashMap<String, Object> pinData1 = new HashMap<>();
         pinData1.put("name", "Small house in ");
@@ -105,10 +105,12 @@ public class BaseControllerTest {
         this.pins.add(pin2);
         this.pins.add(pin3);
 
-        this.pinRepository.save(this.pin1);
-        this.pinRepository.save(this.pin2);
-        this.pinRepository.save(this.pin3);
-        this.mapRepository.save(this.map1);
-        this.mapRepository.save(this.map2);
+        this.pinRepository.saveAll(pins);
+    }
+
+    @BeforeEach
+    public void setup() {
+        this.mockMvc = webAppContextSetup(webApplicationContext).build();
+        databaseInit();
     }
 }

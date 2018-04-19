@@ -12,13 +12,14 @@ public class Pin {
     private Long id;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Map map;
 
     private HashMap<String, Object> data;
 
     public Pin(HashMap<String, Object> data, Map map) {
         this.data = data;
+        this.map = map;
     }
 
     Pin() {

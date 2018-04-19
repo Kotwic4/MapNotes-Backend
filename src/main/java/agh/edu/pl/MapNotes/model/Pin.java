@@ -5,6 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.HashMap;
 
+/**
+ * Pin note on map.
+ * Generally this class represents information about notes that are parts of {@link Map map}.
+ * Each pin can only be in one map. Moreover each pin have his unique id.
+ * All pin information(like geo-localization) are stored in json format in data field.
+ * Backend don't make any assumptions about data stored in data field, so all validation should be on frontend side.
+ *
+ * Map property is ignored in json format to don't make dependency loop.
+ *
+ * @see agh.edu.pl.MapNotes.controller.PinController
+ * @see Map
+ * @see PinRepository
+ */
 @Entity
 public class Pin {
     @Id

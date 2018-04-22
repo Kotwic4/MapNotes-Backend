@@ -6,11 +6,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.web.util.NestedServletException;
 
 import java.util.HashMap;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -19,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class MapControllerTest extends BaseControllerTest {
 
     @Test
-    void getNoteFirstCaseTest() throws Exception {
+    void getMapFirstCaseTest() throws Exception {
         mockMvc.perform(get("/map/{id}", this.map1.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
@@ -29,7 +32,7 @@ class MapControllerTest extends BaseControllerTest {
     }
 
     @Test
-    void getNoteSecondCaseTest() throws Exception {
+    void getMapSecondCaseTest() throws Exception {
         mockMvc.perform(get("/map/{id}", this.map2.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
@@ -39,14 +42,21 @@ class MapControllerTest extends BaseControllerTest {
     }
 
     @Test
-    void getAllNotesTest() throws Exception {
-        mockMvc.perform(get("/map"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(contentType));
+    void getMapNotFoundTest() throws Exception {
+        mockMvc.perform(get("/map/{id}", 100))
+                .andExpect(status().isNotFound());
     }
 
     @Test
-    void putNoteTest() throws Exception {
+    void getAllMapsTest() throws Exception {
+        mockMvc.perform(get("/map"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(2)));
+    }
+
+    @Test
+    void putNewMapTest() throws Exception {
         Map map = createMap();
         mockMvc.perform(put("/map/")
                 .content(toJson(map))
@@ -55,19 +65,19 @@ class MapControllerTest extends BaseControllerTest {
     }
 
     @Test
-    void putPinTest() throws Exception {
-        Pin pin1 = createPin(map2);
-        mockMvc.perform(put("/map/{mapId}/pin", map2.getId())
-                .content(toJson(pin1))
-                .contentType(contentType))
+    void deleteMapTest() throws Exception {
+        mockMvc.perform(delete("/map/{id}", this.map1.getId()))
                 .andExpect(status().isOk());
+        assertEquals(1, this.mapRepository.findAll().size());
     }
 
     @Test
-    void deleteNoteTest() throws Exception {
-        mockMvc.perform(delete("/map/{id}", this.map1.getId()))
-                .andExpect(status().isOk());
+    void deleteMapNotFoundTest() throws Exception {
+        assertThrows(NestedServletException.class, () -> {
+            mockMvc.perform(delete("/map/{id}", 100));});
+        assertEquals(2, this.mapRepository.findAll().size());
     }
+
 
     private Map createMap() {
         HashMap<String, Object> noteData = new HashMap<String, Object>();

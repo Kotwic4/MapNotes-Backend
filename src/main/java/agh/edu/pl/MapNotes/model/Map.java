@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Map is entity which group pins.
+ * Map is an entity, which groups pins.
  * Map is equivalent of excel sheet.
  * Its have its unique id.
  * Its also have lists of all {@link Pin pins} connected to this map.

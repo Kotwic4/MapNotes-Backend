@@ -43,7 +43,7 @@ public class MapController {
      * If the id match id of any map it will update that map.
      * Otherwise it will create new map with new id.
      * Function allow to add multiple pins, but don't allow to delete them.
-     * Update only update fields that are passed in request body.
+     * Update only fields that are passed in request body.
      * @param map map to update or create.
      * @return map stored in database after operation.
      */
@@ -60,7 +60,7 @@ public class MapController {
     }
 
     /**
-     * Get information about specify map.
+     * Get information about specified map.
      * @param mapId id of map to get.
      * @return founded map.
      * @throws MapNotFoundException when map was not found in database.
@@ -71,7 +71,7 @@ public class MapController {
     }
 
     /**
-     * Function allow to add or update one pin on specify map.
+     * Function allow to add or update one pin on specified map.
      * If the pinId match id of any pin it will update that pin.
      * Otherwise it will create new pin with new id.
      * @param mapId id of map to manipulate on.

@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 /**
  * Pin note on map.
- * Generally this class represents information about notes that are parts of {@link Map map}.
+ * This class represents information about notes that are parts of {@link Map map}.
  * Each pin can only be in one map. Moreover each pin have his unique id.
  * All pin information(like geo-localization) are stored in json format in data field.
  * Backend don't make any assumptions about data stored in data field, so all validation should be on frontend side.

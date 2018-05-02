@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Controller to manage {@see Pin pins}.
+ * Controller to manage {@link Pin pins}.
  * It only allow to get or delete pins.
  * To add or modify a pin go to {@link MapController map controller}.
  * @see Pin

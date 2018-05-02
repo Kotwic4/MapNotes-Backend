@@ -4,6 +4,7 @@
 
 - [Demo](#demo)
 - [Frontend](#frontend)
+- [API](#api)
 - [Contribution](#contribution)
   - [CI](#ci)
   - [Review](#review)
@@ -16,6 +17,10 @@ Current version of project can be tested [here](http://map-notes-backend.herokua
 ## Frontend
 
 Information about frontend part of project can be found [here](https://github.com/Kotwic4/MapNotes-Frontend)
+
+## API
+
+Javadoc with information about API is [here](https://kotwic4.github.io/MapNotes-Backend/)
 
 ## Contribution
 

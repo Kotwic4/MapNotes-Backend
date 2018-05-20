@@ -28,6 +28,7 @@ public class Map {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "map")
     private List<Pin> pins;
 
+    @Lob
     private HashMap<String, Object> data;
 
     public Map(HashMap<String, Object> data) {

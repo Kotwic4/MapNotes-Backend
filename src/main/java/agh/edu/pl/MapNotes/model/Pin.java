@@ -28,6 +28,7 @@ public class Pin {
     @ManyToOne
     private Map map;
 
+    @Lob
     private HashMap<String, Object> data;
 
     public Pin(HashMap<String, Object> data, Map map) {

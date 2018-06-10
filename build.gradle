@@ -10,7 +10,7 @@ buildscript {
         junitJupiterVersion = '5.0.3'
         junitPlatformVersion = '1.0.3'
         junitVintegeVersion = '4.12.3'
-        projectVersion = '0.0.1'
+        projectVersion = '1.0.0'
         javaVersion = 1.8
     }
     repositories {

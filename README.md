@@ -40,10 +40,14 @@ In [releases](https://github.com/Kotwic4/MapNotes-Backend/releases) there is com
 which can start server like:
 
 ```
-java -jar MapNotes-Backend-1.0.0.jar
+$ java -jar MapNotes-Backend-1.0.0.jar
 ```
 
 The project is open source, therefor it is easy to build jar from source with gradle.
+
+```
+$ gradle bootJar
+```
 
 ## Configuration
 
@@ -52,12 +56,12 @@ The example below change port to 5000 and use postgresql database.
 
 The easiest way is by environment variables:
 ```
-set SERWER_PORT=5000
-set SPRING_DATASOURCE_URL=jdbc:postgresql://example.com:5432/user_database
-set SPRING_DATASOURCE_USERNAME=user
-set SPRING_DATASOURCE_PASSWORD=secret_password
-set SPRING_JPA_GENERATE-DDL=true
-set SPRING_JPA_HIBERNATE.DDL-AUTO=create
+$ set SERWER_PORT=5000
+$ set SPRING_DATASOURCE_URL=jdbc:postgresql://example.com:5432/user_database
+$ set SPRING_DATASOURCE_USERNAME=user
+$ set SPRING_DATASOURCE_PASSWORD=secret_password
+$ set SPRING_JPA_GENERATE-DDL=true
+$ set SPRING_JPA_HIBERNATE.DDL-AUTO=create
 ```
 
 One can also chance configuration by application.properties:

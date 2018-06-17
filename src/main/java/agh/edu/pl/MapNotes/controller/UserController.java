@@ -44,6 +44,16 @@ public class UserController {
         return this.userRepository.findById(user.getId()).get();
     }
 
+
+    @RequestMapping("/addIfNotExist")
+    public Boolean putUserIfNotInDatabase(@RequestBody User user) {
+        if (this.isUserCredentialsRight(user)) {
+            return false;
+        }
+        userRepository.save(user);
+        return true;
+    }
+
     /**
      * Get information about specified map.
      * @param userId id of map to get.

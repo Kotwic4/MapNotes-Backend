@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -34,8 +35,8 @@ public class UserController {
      * Function allow to create user or to update.
      * If the id match id of any user it will update that user.
      * Otherwise it will create new user with new id.
-     * @param user to update or create.
-     * @return user stored in database after operation.
+     * @param user map to update or create.
+     * @return map stored in database after operation.
      */
     @PutMapping
     public User putUser(@Valid @RequestBody User user) {
@@ -50,10 +51,22 @@ public class UserController {
      * @throws UserNotFoundException when user was not found in database.
      */
     @GetMapping("/{userId}")
-    public User getMapById(@PathVariable("userId") Long userId) throws UserNotFoundException {
+    public User getUserById(@PathVariable("userId") Long userId) throws UserNotFoundException {
         return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
 
+    @RequestMapping("/exists")
+    public Boolean isUserCredentialsRight (@RequestBody User user) {
+        List<User> users =  userRepository.findAll();
+        HashMap<String, Object> userData  = user.getData();
+        for (User currentUser : users ){
+            HashMap<String, Object> data = currentUser.getData();
+            if (data.equals(userData)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Delete map from database.

@@ -34,8 +34,8 @@ public class UserController {
      * Function allow to create user or to update.
      * If the id match id of any user it will update that user.
      * Otherwise it will create new user with new id.
-     * @param user map to update or create.
-     * @return map stored in database after operation.
+     * @param user to update or create.
+     * @return user stored in database after operation.
      */
     @PutMapping
     public User putUser(@Valid @RequestBody User user) {

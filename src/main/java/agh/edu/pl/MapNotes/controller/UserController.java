@@ -31,7 +31,7 @@ public class UserController {
     }
 
     /**
-     * Update or create map.
+     * Update or create user.
      * Function allow to create user or to update.
      * If the id match id of any user it will update that user.
      * Otherwise it will create new user with new id.
@@ -55,8 +55,8 @@ public class UserController {
     }
 
     /**
-     * Get information about specified map.
-     * @param userId id of map to get.
+     * Get information about specified user.
+     * @param userId id of user to get.
      * @return founded user.
      * @throws UserNotFoundException when user was not found in database.
      */
@@ -79,9 +79,8 @@ public class UserController {
     }
 
     /**
-     * Delete map from database.
-     * All pins that are connected to this map will be deleted as well.
-     * @param userId id of map to delete.
+     * Delete user from database.
+     * @param userId id of user to delete.
      */
     @DeleteMapping("/{userId}")
     public void deleteUserById(@PathVariable("userId") Long userId) {

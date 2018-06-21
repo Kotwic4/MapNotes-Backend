@@ -1,9 +1,6 @@
 package agh.edu.pl.MapNotes.controller;
 
-import agh.edu.pl.MapNotes.model.Map;
-import agh.edu.pl.MapNotes.model.MapRepository;
-import agh.edu.pl.MapNotes.model.Pin;
-import agh.edu.pl.MapNotes.model.PinRepository;
+import agh.edu.pl.MapNotes.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,6 +34,7 @@ public abstract class BaseControllerTest {
     public Pin pin1;
     public Pin pin2;
     public Pin pin3;
+    public User user1;
 
     MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
@@ -52,6 +50,9 @@ public abstract class BaseControllerTest {
 
     @Autowired
     public MapRepository mapRepository;
+
+    @Autowired
+    public UserRepository userRepository;
 
     public ObjectMapper mapper = new ObjectMapper();
 
@@ -75,6 +76,12 @@ public abstract class BaseControllerTest {
     private void databaseInit() {
         pinRepository.deleteAll();
         mapRepository.deleteAll();
+        userRepository.deleteAll();
+
+        HashMap<String, Object> userData = new HashMap<>();
+        userData.put("User1mail", "password");
+
+        this.user1 = this.userRepository.save(new User(userData));
 
         HashMap<String, Object> mapData = new HashMap<String, Object>();
         mapData.put("name", "flats in Krakow");

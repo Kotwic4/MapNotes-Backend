@@ -36,8 +36,7 @@ public class UserController {
      */
     @PutMapping
     public User putUser(@Valid @RequestBody User user) {
-        user = userRepository.save(user);
-        return this.userRepository.findById(user.getId()).get();
+        return userRepository.save(user);
     }
 
 }
